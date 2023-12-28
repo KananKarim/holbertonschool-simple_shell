@@ -9,6 +9,7 @@
 
 void display_prompt() {
     printf("#cisfun$ ");
+    fflush(stdout);
 }
 
 int main(void) {
@@ -49,6 +50,8 @@ int main(void) {
                 printf("%s: command not found\n", input);
             }
         }
+
+	display_prompt();
     }
 
     return 0;
