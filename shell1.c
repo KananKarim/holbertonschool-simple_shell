@@ -1,59 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
 
-#define MAX_INPUT_SIZE 1024
+int main(void)
+{
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t read;
 
-void display_prompt() {
-    printf("#cisfun$ ");
-    fflush(stdout);
-}
-
-int main(void) {
-    char input[MAX_INPUT_SIZE];
-    int status;
-    pid_t child_pid;
-
-    while (1) {
-        display_prompt();
-
-        if (fgets(input, MAX_INPUT_SIZE, stdin) == NULL) {
+    while (1)
+    {
+	    if (isatty(STDIN_FILENO))
+		    printf("#cisfun$ ");
+        read = getline(&line, &len, stdin);
+        if (read == -1)
+        {
             printf("\n");
-            break;
+            exit(EXIT_SUCCESS);
         }
-
-        input[strcspn(input, "\n")] = '\0';
-
-        if (strlen(input) == 0) {
-            continue;
+        else if (read > 1)
+        {
+            system(line);
         }
-
-        child_pid = fork();
-
-        if (child_pid == -1) {
-            perror("fork");
-            exit(EXIT_FAILURE);
-        }
-
-        if (child_pid == 0) {
-            if (execlp(input, input, (char *)NULL) == -1) {
-                perror("exec");
-                exit(EXIT_FAILURE);
-            }
-        } else {
-            waitpid(child_pid, &status, 0);
-
-            if (WIFEXITED(status) && WEXITSTATUS(status) == 127) {
-                printf("%s: command not found\n", input);
-            }
-        }
-
-	display_prompt();
     }
-
-    return 0;
+    free(line);
+    return (EXIT_SUCCESS);
 }
 
