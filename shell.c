@@ -55,7 +55,7 @@ int execute(char *cmd_arr[])
 	}
 	if (pid > 0)
 	{
-		free(exe_path)
+		free(exe_path);
 		do {
 			waitpid(pid, &status, WUNTRACED);
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
