@@ -1,29 +1,32 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <string.h>
 
 int main(void)
 {
-    char *line = NULL;
-    size_t len = 0;
-    ssize_t read;
+  char *line = NULL;
+  size_t len = 0;
+  ssize_t read;
 
-    while (1)
+  while (1)
+  {
+      if (isatty(STDIN_FILENO))
+          printf("#cisfun$ ");
+    read = getline(&line, &len, stdin);
+    if (read == -1)
     {
-	    if (isatty(STDIN_FILENO))
-		    printf("#cisfun$ ");
-        read = getline(&line, &len, stdin);
-        if (read == -1)
-        {
+       if (!feof(stdin)) 
             printf("\n");
-            exit(EXIT_SUCCESS);
-        }
-        else if (read > 1)
-        {
-            system(line);
-        }
+        exit(EXIT_SUCCESS);
     }
-    free(line);
-    return (EXIT_SUCCESS);
+    else if (read > 1)
+    {
+        line[strcspn(line, "\n")] = 0;
+        system(line);
+    }
+  }
+  free(line);
+  return (EXIT_SUCCESS);
 }
 
