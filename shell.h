@@ -7,12 +7,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include  <signal.h>
+#include <signal.h>
 #include <stdio.h>
 
 extern char **environ;
 
-char *_strcat(char *dest, char *dest, char *src);
+char *_strcat(char *dest, char *src);
 int _strlen(const char *s);
 int _strcmp(char *s1, char *s2);
 int _strncmp(const char *s1, const char *s2, size_t len);
