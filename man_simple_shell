@@ -44,15 +44,7 @@ may be builtin for efficiency (e.g.  printf(1), echo(1), test(1), etc).
 
 ($) ./hsh
 
-($) ls
 
-README.md		_print_env.c		frees.c			remove_new_line.c	utilities.c
-
-_exit.c			builtin_commands.c	main.c			shell.h
-
-_getenv.c		counters.c		man_simple_shell	signal_handler.c
-
-_open_help.c		exec.c			more_utilities.c	tokenize.c
 
 ($)
 
